@@ -9,7 +9,6 @@ root.render(
     <Canvas
         //no toneMappin in three: flat = THREE.NoToneMapping
         flat
-
         camera={ {
             fov: 45,
             near: 0.1,

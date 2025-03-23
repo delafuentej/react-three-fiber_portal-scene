@@ -1,9 +1,12 @@
-import { OrbitControls, useGLTF, useTexture, Center, Sparkles, shaderMaterial} from '@react-three/drei';
-import { extend, useFrame } from '@react-three/fiber';
+import { OrbitControls, useGLTF, useTexture, Center, Sparkles, shaderMaterial, Environment} from '@react-three/drei';
+import { extend, useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
+
 import { useRef } from 'react';
 import portalVertexShader from './shaders/portal/vertex.glsl';
 import portalFragmentShader from './shaders/portal/fragment.glsl';
+import WizardModel from './components/models/Wizard';
+import BattleMageWizardModel from './components/models/BattleMageWizard';
 /*
 -The model "portal" is composed of multiple parts((portal.nodes)) :(not add the whole model at once to the scene )
     - portal.nodes.baked: the baked model => so we need to apply a MeshBasicMaterial with the baked texture
@@ -33,31 +36,55 @@ extend({PortalMaterial});
 
 export default function Experience(){
 
+    //fog
+   const {scene } = useThree();
+   scene.fog = new THREE.FogExp2("#61563f", 0.1);
+
     const {nodes} = useGLTF('./model/portal.glb');
     console.log('nodes', nodes)
 
     //baked texture:
     const bakedTexture = useTexture('./model/baked.jpg');
+    console.log('bakedTexture',bakedTexture)
     // so the texture is immediately returned when calling useTexture, we can directly flip it:
     bakedTexture.flipY = false; //oder in meshBasicMaterial prop => map-flipY={false}
 
     //portal ref
     const portalMaterialRef= useRef();
 
+    
     // portal animation
     useFrame((state, delta)=>{
         portalMaterialRef.current.uTime += delta * 3;
     })
    
+  
     return <>
+
          <color attach="background" args={["#030202"]} />
+
+         <Environment
+         background
+           files='./environmentMap/vincent-mactiernan-asset.hdr'
+           ground={{
+            height: 7,
+            radius: 28,
+            scale: 100
+        }} 
+     
+        />
+    
+
+
+
+         <ambientLight intensity={3} />
 
         <OrbitControls makeDefault />
 
         <Center>
              {/* baked */}
             <mesh geometry={nodes.baked.geometry}>
-                <meshBasicMaterial map={bakedTexture}/>
+                <meshBasicMaterial  map={bakedTexture}/>
             </mesh>
 
             {/* pole lights */}
@@ -101,7 +128,13 @@ export default function Experience(){
                 position-y={1}
                 speed={0.3}
             />
+             <WizardModel />
+              
+            <BattleMageWizardModel />
+       
         </Center>
+       
+       
     </>
 };
 
