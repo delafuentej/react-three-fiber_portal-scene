@@ -18,10 +18,8 @@ export default function WizardModel() {
         }
     });
 
-
-
     return <>
-             <primitive object={wizardModel.scene} scale={0.01} position={[0, 0.3, -1.65]} rotation-y={0.7}/>
+             <primitive object={wizardModel.scene} scale={0.01} position={[0, 0.28, -1.65]} rotation-y={0.7}/>
             </>
 
 }

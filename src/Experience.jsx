@@ -1,8 +1,8 @@
 import { OrbitControls, useGLTF, useTexture, Center, Sparkles, shaderMaterial, Environment} from '@react-three/drei';
-import { extend, useFrame, useThree } from '@react-three/fiber';
+import { extend, useFrame, useThree, useLoader } from '@react-three/fiber';
 import * as THREE from 'three';
-
-import { useRef } from 'react';
+import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader';
+import { useRef} from 'react';
 import portalVertexShader from './shaders/portal/vertex.glsl';
 import portalFragmentShader from './shaders/portal/fragment.glsl';
 import WizardModel from './components/models/Wizard';
@@ -36,9 +36,11 @@ extend({PortalMaterial});
 
 export default function Experience(){
 
+
     //fog
-   const {scene } = useThree();
+   const {scene, gl } = useThree();
    scene.fog = new THREE.FogExp2("#61563f", 0.1);
+
 
     const {nodes} = useGLTF('./model/portal.glb');
     console.log('nodes', nodes)
@@ -56,20 +58,24 @@ export default function Experience(){
     // portal animation
     useFrame((state, delta)=>{
         portalMaterialRef.current.uTime += delta * 3;
-    })
-   
-  
+
+    });
+
+
+
+
+
     return <>
 
-         <color attach="background" args={["#030202"]} />
+      <color attach="background" args={["#61563f"]} />
 
-         <Environment
-         background
-           files='./environmentMap/vincent-mactiernan-asset.hdr'
-           ground={{
-            height: 7,
-            radius: 28,
-            scale: 100
+       <Environment
+        background
+        files='./environmentMap/vincent-mactiernan-asset.hdr'
+        ground={{
+            height:7,//7
+            radius: 28,//28
+            scale: 100//100
         }} 
      
         />
