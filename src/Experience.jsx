@@ -74,7 +74,7 @@ export default function Experience(){
         background
         files='./environmentMap/vincent-mactiernan-asset.hdr'
         ground={{
-            height: 7,//7
+            height: 20,//7
             radius: 28,//28
             scale: 50//100
         }} 
@@ -95,7 +95,6 @@ export default function Experience(){
                 <planeGeometry args={[20, 20]} />
                 <meshStandardMaterial color="#61563f" transparent opacity={0}/>
             </mesh>
-
 
              {/* baked */}
             <mesh geometry={nodes.baked.geometry}>
