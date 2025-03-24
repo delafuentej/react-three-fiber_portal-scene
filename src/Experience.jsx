@@ -25,8 +25,8 @@ import BattleMageWizardModel from './components/models/BattleMageWizard';
 const PortalMaterial = shaderMaterial(
     {
         uTime: 0,
-        uColorStart: new THREE.Color('#ffffff'),
-        uColorEnd: new THREE.Color('#000000')
+        uColorStart: new THREE.Color('#6A0DAD'),
+        uColorEnd: new THREE.Color('#4B0082') //'#0A0A5C'
     },
     portalVertexShader,
     portalFragmentShader
@@ -39,7 +39,7 @@ export default function Experience(){
 
     //fog
    const {scene} = useThree();
-   scene.fog = new THREE.FogExp2("#61563f", 0.05);
+   scene.fog = new THREE.FogExp2("#201c15", 0.05);//"#352f22"
 
 
     const {nodes} = useGLTF('./model/portal.glb');
