@@ -1,12 +1,12 @@
 import { OrbitControls, useGLTF, useTexture, Center, Sparkles, shaderMaterial, Environment} from '@react-three/drei';
 import { extend, useFrame, useThree, useLoader } from '@react-three/fiber';
 import * as THREE from 'three';
-import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader';
 import { useRef} from 'react';
 import portalVertexShader from './shaders/portal/vertex.glsl';
 import portalFragmentShader from './shaders/portal/fragment.glsl';
 import WizardModel from './components/models/Wizard';
 import BattleMageWizardModel from './components/models/BattleMageWizard';
+
 /*
 -The model "portal" is composed of multiple parts((portal.nodes)) :(not add the whole model at once to the scene )
     - portal.nodes.baked: the baked model => so we need to apply a MeshBasicMaterial with the baked texture
@@ -38,8 +38,8 @@ export default function Experience(){
 
 
     //fog
-   const {scene, gl } = useThree();
-   scene.fog = new THREE.FogExp2("#61563f", 0.1);
+   const {scene} = useThree();
+   scene.fog = new THREE.FogExp2("#61563f", 0.05);
 
 
     const {nodes} = useGLTF('./model/portal.glb');
@@ -50,6 +50,7 @@ export default function Experience(){
     console.log('bakedTexture',bakedTexture)
     // so the texture is immediately returned when calling useTexture, we can directly flip it:
     bakedTexture.flipY = false; //oder in meshBasicMaterial prop => map-flipY={false}
+    bakedTexture.encoding = THREE.sRGBEncoding;
 
     //portal ref
     const portalMaterialRef= useRef();
@@ -73,9 +74,9 @@ export default function Experience(){
         background
         files='./environmentMap/vincent-mactiernan-asset.hdr'
         ground={{
-            height:7,//7
+            height: 7,//7
             radius: 28,//28
-            scale: 100//100
+            scale: 50//100
         }} 
      
         />
@@ -87,7 +88,15 @@ export default function Experience(){
 
         <OrbitControls makeDefault />
 
-        <Center>
+        <Center  position={[0, 0, 0]}>
+
+            {/* floor */}
+            <mesh position={[0, -1, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+                <planeGeometry args={[20, 20]} />
+                <meshStandardMaterial color="#61563f" transparent opacity={0}/>
+            </mesh>
+
+
              {/* baked */}
             <mesh geometry={nodes.baked.geometry}>
                 <meshBasicMaterial  map={bakedTexture}/>
@@ -127,18 +136,27 @@ export default function Experience(){
                    /> */}
 
             </mesh>
+
+
             {/* Sparkles- Fireflies */}
-            <Sparkles 
-                size={6}
-                scale={[4, 2, 4]}
-                position-y={1}
-                speed={0.3}
+            <Sparkles
+                count={500} 
+                size={3}
+                scale={[10, 5, 10]}
+                position={[0,0,0]}
+                speed={0.4}
+                
             />
-             <WizardModel />
+            
+
+            <WizardModel />
               
-            <BattleMageWizardModel />
+            <BattleMageWizardModel />     
+           
        
         </Center>
+
+      
        
        
     </>

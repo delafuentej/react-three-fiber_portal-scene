@@ -22,8 +22,16 @@ export default function BattleMageWizardModel() {
     
     return <>
                     
-                     <primitive object={battleMageWizardModel.scene} scale={0.5} position={[0, 0.5, 0.3]} rotation-y={Math.PI}/>
-            
+                     <primitive 
+                        object={battleMageWizardModel.scene} 
+                        scale={0.6} 
+                        position={[0, 0.88, -1.69]} 
+                        rotation-y={Math.PI *2}
+                        castShadow
+                        receiveShadow
+                        />
+                
+                   {/* position={[0, 0.28, -1.65]} */}
             </>
 
 }
