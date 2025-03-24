@@ -1,5 +1,5 @@
 import { OrbitControls, useGLTF, useTexture, Center, Sparkles, shaderMaterial, Environment} from '@react-three/drei';
-import { extend, useFrame, useThree, useLoader } from '@react-three/fiber';
+import { extend, useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 import { useRef} from 'react';
 import portalVertexShader from './shaders/portal/vertex.glsl';
@@ -62,10 +62,6 @@ export default function Experience(){
 
     });
 
-
-
-
-
     return <>
 
       <color attach="background" args={["#61563f"]} />
@@ -80,9 +76,6 @@ export default function Experience(){
         }} 
      
         />
-    
-
-
 
          <ambientLight intensity={3} />
 
@@ -147,12 +140,10 @@ export default function Experience(){
                 
             />
             
-
             <WizardModel />
               
             <BattleMageWizardModel />     
            
-       
         </Center>
 
       
