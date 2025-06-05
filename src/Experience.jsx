@@ -8,6 +8,7 @@ import {
   Environment,
 } from "@react-three/drei";
 import { extend, useFrame, useThree } from "@react-three/fiber";
+import { Perf } from "r3f-perf";
 import * as THREE from "three";
 import { useRef } from "react";
 import portalVertexShader from "./shaders/portal/vertex.glsl";
@@ -68,7 +69,8 @@ export default function Experience() {
   return (
     <>
       <color attach="background" args={["#61563f"]} />
-
+      <Perf position="top-left" />
+      // onChange={(...args) => console.log(...args)}
       <Environment
         background
         files="./environmentMap/vincent-mactiernan-asset.hdr"
@@ -78,11 +80,8 @@ export default function Experience() {
           scale: 50, //100
         }}
       />
-
       <ambientLight intensity={3} />
-
       <OrbitControls makeDefault />
-
       <Center position={[0, 0, 0]}>
         {/* floor */}
         <mesh position={[0, -1, 0]} rotation={[-Math.PI / 2, 0, 0]}>
